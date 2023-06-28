@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    *{
+      cursor: red;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    #inputContainer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("FOLHA\ PERFEITA.PNG");
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        overflow: hidden;
+        white-space: pre-wrap;
+    }
+
+    #inputText {
+        width: calc(100% - 20px);
+        height: 100%;
+        background-color: transparent;
+        border: none;
+        color: #555555;
+        font-family: Arial, sans-serif;
+        resize: none;
+        outline: none;
+        overflow-y: scroll;
+        padding-top: 10px; /* Espaço entre a parte superior e a primeira linha */
+        line-height: 1.5; /* Espaço entre as linhas de texto */
+        font-family: 'Pacifico', cursive;
+        font-size: 22px;
+    }
+
+    #saveButton {
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        background-color: #008080;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    ::-webkit-scrollbar {
+        width: 12px; /* Largura da barra de rolagem */
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: black; /* Cor de fundo da barra de rolagem */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #222222; /* Cor da rolagem */
+    }
+</style>
+</head>
+<body>
+    <div id="inputContainer">
+        <button id="saveButton" onclick="saveText()">S<br>a<br>l<br>v<br>a<br>r</button>
+        <textarea spellcheck="false" id="inputText" oninput="checkOverflow(this)"></textarea>
+    </div>
+
+    <script>
+        function checkOverflow(element) {
+            if (element.scrollHeight > element.clientHeight) {
+                element.style.overflowY = "scroll";
+            } else {
+                element.style.overflowY = "auto";
+            }
+        }
+
+        function saveText() {
+  var textToSave = document.getElementById("inputText").value;
+
+  var fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.style.display = "none";
+  document.body.appendChild(fileInput);
+
+  fileInput.addEventListener("change", function (event) {
+    var file = event.target.files[0];
+    var fileName = file.name;
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      var downloadLink = document.createElement("a");
+      downloadLink.href = e.target.result;
+      downloadLink.download = fileName;
+      downloadLink.style.display = "none";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    };
+
+    reader.readAsDataURL(file);
+    document.body.removeChild(fileInput);
+  });
+
+  fileInput.click();
+}
+const inputElement = document.getElementById("inputText");
+
+        inputElement.addEventListener("keydown", function(event) {
+            if (event.key === "Tab") {
+                event.preventDefault(); // Impede o comportamento padrão do Tab
+
+                const cursorPosition = inputElement.selectionStart; // Obtém a posição do cursor
+
+                // Adiciona 10 espaços na posição do cursor
+                const currentValue = inputElement.value;
+                const spaces = "          ";
+                const newValue = currentValue.slice(0, cursorPosition) + spaces + currentValue.slice(cursorPosition);
+                inputElement.value = newValue;
+
+                // Define a nova posição do cursor
+                const newCursorPosition = cursorPosition + spaces.length;
+                inputElement.setSelectionRange(newCursorPosition, newCursorPosition);
+            }
+
+            if (event.ctrlKey && event.key === "ç") {
+                event.preventDefault(); // Impede o comportamento padrão das teclas
+
+                const cursorPosition = inputElement.selectionStart; // Obtém a posição do cursor
+
+                // Insere o caracter especial "◼" na posição do cursor
+                const currentValue = inputElement.value;
+                const newValue = currentValue.slice(0, cursorPosition) + "◼" + currentValue.slice(cursorPosition);
+                inputElement.value = newValue;
+
+                // Define a nova posição do cursor
+                const newCursorPosition = cursorPosition + 1;
+                inputElement.setSelectionRange(newCursorPosition, newCursorPosition);
+            }
+            if (event.ctrlKey && event.key === "m") {
+                event.preventDefault(); // Impede o comportamento padrão das teclas
+
+                const cursorPosition = inputElement.selectionStart; // Obtém a posição do cursor
+
+                // Insere o caracter especial "◼" na posição do cursor
+                const currentValue = inputElement.value;
+                const newValue = currentValue.slice(0, cursorPosition) + "•" + currentValue.slice(cursorPosition);
+                inputElement.value = newValue;
+
+                // Define a nova posição do cursor
+                const newCursorPosition = cursorPosition + 1;
+                inputElement.setSelectionRange(newCursorPosition, newCursorPosition);
+            }
+          if (event.ctrlKey && event.key === "d") {
+                event.preventDefault(); // Impede o comportamento padrão das teclas
+
+                const cursorPosition = inputElement.selectionStart; // Obtém a posição do cursor
+
+                // Insere o caracter especial "◼" na posição do cursor
+                const currentValue = inputElement.value;
+                const newValue = currentValue.slice(0, cursorPosition) + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" + currentValue.slice(cursorPosition);
+                inputElement.value = newValue;
+
+                // Define a nova posição do cursor
+                const newCursorPosition = cursorPosition + 1;
+                inputElement.setSelectionRange(newCursorPosition, newCursorPosition);
+            }
+          
+        });
+      
+    </script>
+</body>
+</html>
